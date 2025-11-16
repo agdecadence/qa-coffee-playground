@@ -47,12 +47,13 @@ jobs:
         id: impact
         uses: actions/ai-inference@v2.0.1
         with:
-          model: mistral-ai/ministral-3b
+          model: openai/gpt-5-nano
           system-prompt: |
             You are a senior QA Automation Engineer.
             Your task is to read a git diff and produce a precise list of:
             - functional areas impacted
             - regression risks
+            You should generate a checklist of areas to test.
             Respond in concise bullet points.
           prompt: |
             Here is the git diff to analyze:
