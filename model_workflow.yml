@@ -51,4 +51,3 @@ jobs:
           echo "===== REGRESSION IMPACT ====="
           echo "$ {{ steps.impact.outputs.response }}"
           echo "============================="
-          
