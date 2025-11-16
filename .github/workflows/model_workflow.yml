@@ -44,8 +44,10 @@ jobs:
             - functional areas impacted
             - regression risks
             Respond in concise bullet points.
-          input-file: diff.txt
-          prompt-file: ""
+          prompt: |
+            Here is the git diff to analyze:
+
+            ${{ steps.diff_file.outputs.diff }}
           max-tokens: 2048
 
       - name: Show output
