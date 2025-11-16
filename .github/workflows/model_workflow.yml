@@ -32,7 +32,17 @@ jobs:
           echo "Head SHA: $HEAD_SHA"
 
           git --no-pager diff "$BASE_SHA...$HEAD_SHA" > diff.txt
-    
+
+      - name: Read diff into output
+        id: diff_file
+        run: |
+          content="$(cat diff.txt)"
+          {
+            echo 'diff<<EOF'
+            echo "$content"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"    
+
       - name: Analyze regression impact
         id: impact
         uses: actions/ai-inference@v2.0.1
@@ -53,5 +63,5 @@ jobs:
       - name: Show output
         run: |
           echo "===== REGRESSION IMPACT ====="
-          echo "$ {{ steps.impact.outputs.response }}"
+          echo "${{ steps.impact.outputs.response }}"
           echo "============================="
