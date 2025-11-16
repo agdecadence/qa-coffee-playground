@@ -1,11 +1,13 @@
-name: QA Playground Workflow Models Testing
+name: QA Playground Workflow LLM Testing
 
 on:
   pull_request:
     types:
       - opened
+      - edited
+      - synchronize
     branches:
-      - 'main'
+      - main
 
 jobs:
   inference:
@@ -23,31 +25,44 @@ jobs:
 
       - name: Generate diff
         run: |
-          git fetch origin
-          BASE="${{ github.event.pull_request.base.ref }}"
-          HEAD="${{ github.event.pull_request.head.ref }}"
-          
-          git --no-pager diff \
-          "origin/$BASE"... "origin/$HEAD" \
-          > diff.txt
-    
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: $HEAD_SHA"
+
+          git --no-pager diff "$BASE_SHA...$HEAD_SHA" > diff.txt
+
+      - name: Read diff into output
+        id: diff_file
+        run: |
+          content="$(cat diff.txt)"
+          {
+            echo 'diff<<EOF'
+            echo "$content"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"    
+
       - name: Analyze regression impact
         id: impact
-        uses: actions/ai-inference@v1.2
+        uses: actions/ai-inference@v2.0.1
         with:
-          model: mistral-ai/ministral-3b
+          model: openai/gpt-4o
           system-prompt: |
             You are a senior QA Automation Engineer.
             Your task is to read a git diff and produce a precise list of:
             - functional areas impacted
             - regression risks
+            You should generate a checklist of areas to test.
             Respond in concise bullet points.
-          input-file: diff.txt
-          prompt-file: ""
+          prompt: |
+            Here is the git diff to analyze:
+
+            ${{ steps.diff_file.outputs.diff }}
           max-tokens: 2048
 
       - name: Show output
         run: |
           echo "===== REGRESSION IMPACT ====="
-          echo "$ {{ steps.impact.outputs.response }}"
+          echo "${{ steps.impact.outputs.response }}"
           echo "============================="
