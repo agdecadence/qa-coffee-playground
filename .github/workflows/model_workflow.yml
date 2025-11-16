@@ -23,13 +23,13 @@ jobs:
 
       - name: Generate diff
         run: |
-          git fetch origin
-          BASE="${{ github.event.pull_request.base.ref }}"
-          HEAD="${{ github.event.pull_request.head.ref }}"
-          
-          git --no-pager diff \
-          "origin/$BASE"... "origin/$HEAD" \
-          > diff.txt
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: $HEAD_SHA"
+
+          git --no-pager diff "$BASE_SHA...$HEAD_SHA" > diff.txt
     
       - name: Analyze regression impact
         id: impact
