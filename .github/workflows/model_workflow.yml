@@ -33,7 +33,7 @@ jobs:
     
       - name: Analyze regression impact
         id: impact
-        uses: actions/ai-inference@v1.2
+        uses: actions/ai-inference@v2.0.1
         with:
           model: mistral-ai/ministral-3b
           system-prompt: |
