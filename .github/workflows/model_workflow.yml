@@ -1,4 +1,4 @@
-name: QA Playground Workflow Models Testing
+name: QA Playground Workflow LLM Testing
 
 on:
   pull_request:
