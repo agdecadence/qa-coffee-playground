@@ -3,7 +3,7 @@ name: QA Playground Workflow Models Testing
 on:
   pull_request:
     types:
-      - ['opened', 'edited']
+      - [opened, edited]
     branches:
       - 'main'
 
