@@ -1,0 +1,53 @@
+name: QA Playground Workflow Models Testing
+
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'main'
+
+jobs:
+  inference:
+    permissions:
+      models: read
+      contents: read
+      pull-requests: read
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Generate diff
+        run: |
+          git fetch origin
+          BASE="${{ github.event.pull_request.base.ref }}"
+          HEAD="${{ github.event.pull_request.head.ref }}"
+          
+          git --no-pager diff \
+          "origin/$BASE"... "origin/$HEAD" \
+          > diff.txt
+    
+      - name: Analyze regression impact
+        id: impact
+        uses: actions/ai-inference@v1.2
+        with:
+          model: mistral-ai/ministral-3b
+          system-prompt: |
+            You are a senior QA Automation Engineer.
+            Your task is to read a git diff and produce a precise list of:
+            - functional areas impacted
+            - regression risks
+            Respond in concise bullet points.
+          input-file: diff.txt
+          prompt-file: ""
+          max-tokens: 2048
+
+      - name: Show output
+        run: |
+          echo "===== REGRESSION IMPACT ====="
+          echo "$ {{ steps.impact.outputs.response }}"
+          echo "============================="
