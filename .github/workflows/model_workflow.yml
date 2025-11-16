@@ -3,10 +3,9 @@ name: QA Playground Workflow LLM Testing
 on:
   pull_request:
     types:
-      - opened
-      - edited
+      - [opened, edited]
     branches:
-      - main
+      - [main]
 
 jobs:
   inference:
