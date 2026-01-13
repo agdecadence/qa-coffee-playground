@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { QuizService } from '../services/quizService';
+import { Quiz } from '../models/types';
 
 const router = Router();
 const quizService = new QuizService();
@@ -49,5 +50,334 @@ router.post('/submit', (req: Request, res: Response) => {
   const result = quizService.submitQuiz(req.body);
   res.status(result.success ? 200 : 400).json(result);
 });
+
+export const quizzes: Quiz[] = [
+  {
+    id: 'quiz-001',
+    lessonId: 'lesson-001',
+    title: 'Introduction to Coffee Quiz',
+    passingScore: 70,
+    questions: [
+      {
+        id: 'q001-1',
+        lessonId: 'lesson-001',
+        question: 'What percentage of global coffee production is Arabica?',
+        options: ['30-40%', '50-55%', '60-70%', '80-90%'],
+        correctAnswer: 2,
+        explanation: 'Arabica accounts for about 60-70% of global coffee production, while Robusta makes up most of the remainder.',
+      },
+      {
+        id: 'q001-2',
+        lessonId: 'lesson-001',
+        question: 'Which coffee species has higher caffeine content?',
+        options: ['Arabica', 'Robusta', 'They have the same', 'Neither has caffeine'],
+        correctAnswer: 1,
+        explanation: 'Robusta has significantly higher caffeine content (2.2-2.7%) compared to Arabica (1.2-1.5%).',
+      },
+      {
+        id: 'q001-3',
+        lessonId: 'lesson-001',
+        question: 'At what altitude is Arabica typically grown?',
+        options: ['0-600m', '600-2000m', '2000-3000m', 'Above 3000m'],
+        correctAnswer: 1,
+        explanation: 'Arabica thrives at higher altitudes between 600-2000 meters, while Robusta grows at lower elevations.',
+      },
+      {
+        id: 'q001-4',
+        lessonId: 'lesson-001',
+        question: 'What are the seeds inside coffee cherries commonly called?',
+        options: ['Coffee nuts', 'Coffee beans', 'Coffee pits', 'Coffee kernels'],
+        correctAnswer: 1,
+        explanation: 'The seeds inside coffee cherries are called coffee beans, even though they are technically seeds, not beans.',
+      },
+      {
+        id: 'q001-5',
+        lessonId: 'lesson-001',
+        question: 'Which characteristic is typical of Arabica coffee?',
+        options: ['Higher caffeine content', 'More disease-resistant', 'Sweeter and more complex flavor', 'Grows at sea level'],
+        correctAnswer: 2,
+        explanation: 'Arabica is known for its sweeter, more complex flavor profile compared to the stronger, more bitter taste of Robusta.',
+      },
+      {
+        id: 'q001-6',
+        lessonId: 'lesson-001',
+        question: 'What is the "Coffee Belt"?',
+        options: [
+          'A traditional garment worn by coffee farmers',
+          'The region between the Tropics of Cancer and Capricorn',
+          'A method of processing coffee beans',
+          'The darker band around medium roast beans'
+        ],
+        correctAnswer: 1,
+        explanation: 'The Coffee Belt is the region between the Tropics of Cancer and Capricorn where conditions are ideal for growing coffee.',
+      },
+    ],
+  },
+  {
+    id: 'quiz-002',
+    lessonId: 'lesson-003',
+    title: 'Roast Levels Quiz',
+    passingScore: 70,
+    questions: [
+      {
+        id: 'q003-1',
+        lessonId: 'lesson-003',
+        question: 'Which roast level retains the most caffeine?',
+        options: ['Light roast', 'Medium roast', 'Dark roast', 'All the same'],
+        correctAnswer: 0,
+        explanation: 'Light roast retains the most caffeine because beans are roasted for a shorter time, preserving more of the original caffeine content.',
+      },
+      {
+        id: 'q003-2',
+        lessonId: 'lesson-003',
+        question: 'What is a characteristic of dark roast coffee?',
+        options: [
+          'Highest acidity',
+          'Most origin flavors',
+          'Shiny oil on surface',
+          'Light brown color',
+        ],
+        correctAnswer: 2,
+        explanation: 'Dark roast coffee has a shiny oil surface due to oils being drawn out during the longer roasting process.',
+      },
+      {
+        id: 'q003-3',
+        lessonId: 'lesson-003',
+        question: 'Which flavor profile is typical for light roast?',
+        options: [
+          'Smoky and bold',
+          'Floral and fruity',
+          'Nutty and chocolate',
+          'Burnt and bitter',
+        ],
+        correctAnswer: 1,
+        explanation: 'Light roasts preserve the original characteristics of the beans, often resulting in floral, fruity, and bright flavors.',
+      },
+      {
+        id: 'q003-4',
+        lessonId: 'lesson-003',
+        question: 'What happens to acidity as roast level increases?',
+        options: [
+          'Acidity increases',
+          'Acidity decreases',
+          'Acidity stays the same',
+          'Acidity doubles'
+        ],
+        correctAnswer: 1,
+        explanation: 'As beans are roasted longer, acidity decreases. Light roasts have the highest acidity, while dark roasts have the lowest.',
+      },
+      {
+        id: 'q003-5',
+        lessonId: 'lesson-003',
+        question: 'Which statement about dark roast is TRUE?',
+        options: [
+          'It has more caffeine than light roast',
+          'It shows more origin characteristics',
+          'The roasted flavors dominate over origin flavors',
+          'It is always better quality'
+        ],
+        correctAnswer: 2,
+        explanation: 'Dark roast has pronounced roasted flavors (smoky, bold) that mask the original characteristics of the coffee origin.',
+      },
+      {
+        id: 'q003-6',
+        lessonId: 'lesson-003',
+        question: 'What is another name for medium roast?',
+        options: [
+          'Italian roast',
+          'City roast',
+          'French roast',
+          'Cinnamon roast'
+        ],
+        correctAnswer: 1,
+        explanation: 'Medium roast is also called City roast or American roast. It offers a balance between acidity and body.',
+      },
+    ],
+  },
+  {
+    id: 'quiz-004',
+    lessonId: 'lesson-004',
+    title: 'Pour Over Brewing Quiz',
+    passingScore: 70,
+    questions: [
+      {
+        id: 'q004-1',
+        lessonId: 'lesson-004',
+        question: 'What is the typical coffee-to-water ratio for pour over?',
+        options: ['1:10', '1:16', '1:25', '1:2'],
+        correctAnswer: 1,
+        explanation: 'The standard ratio for pour over is 1:16 (1 gram of coffee to 16 grams of water), though 1:15 to 1:17 are also common.',
+      },
+      {
+        id: 'q004-2',
+        lessonId: 'lesson-004',
+        question: 'What is the purpose of the bloom phase?',
+        options: [
+          'To cool down the water',
+          'To allow CO2 to escape',
+          'To grind the coffee finer',
+          'To add more coffee',
+        ],
+        correctAnswer: 1,
+        explanation: 'The bloom phase allows trapped CO2 gas to escape from the coffee grounds, ensuring even extraction.',
+      },
+      {
+        id: 'q004-3',
+        lessonId: 'lesson-004',
+        question: 'What is the ideal water temperature for pour over?',
+        options: ['160-170°F', '180-190°F', '195-205°F', '212°F (boiling)'],
+        correctAnswer: 2,
+        explanation: 'The ideal temperature range for pour over is 195-205°F (90-96°C), hot enough to extract properly but not so hot as to over-extract.',
+      },
+    ],
+  },
+  {
+    id: 'quiz-005',
+    lessonId: 'lesson-005',
+    title: 'Espresso Fundamentals Quiz',
+    passingScore: 80,
+    questions: [
+      {
+        id: 'q005-1',
+        lessonId: 'lesson-005',
+        question: 'What is the standard espresso brew ratio?',
+        options: ['1:1', '1:2', '1:16', '1:10'],
+        correctAnswer: 1,
+        explanation: 'The standard espresso ratio is 1:2 (e.g., 18g coffee to 36g liquid output).',
+      },
+      {
+        id: 'q005-2',
+        lessonId: 'lesson-005',
+        question: 'How much pressure is used to brew espresso?',
+        options: ['3 bars', '6 bars', '9 bars', '12 bars'],
+        correctAnswer: 2,
+        explanation: 'Espresso is brewed at 9 bars of pressure, which forces water through the finely ground coffee.',
+      },
+      {
+        id: 'q005-3',
+        lessonId: 'lesson-005',
+        question: 'If your espresso shot pulls too fast, what should you do?',
+        options: [
+          'Increase water temperature',
+          'Grind coarser',
+          'Grind finer',
+          'Use less coffee',
+        ],
+        correctAnswer: 2,
+        explanation: 'A shot that pulls too fast is under-extracted. Grinding finer increases resistance and slows extraction.',
+      },
+      {
+        id: 'q005-4',
+        lessonId: 'lesson-005',
+        question: 'What indicates a fresh espresso shot?',
+        options: [
+          'Clear liquid',
+          'Golden crema on top',
+          'No visible layers',
+          'Thin and watery',
+        ],
+        correctAnswer: 1,
+        explanation: 'Fresh espresso produces a golden-brown crema layer on top, indicating proper extraction and fresh beans.',
+      },
+      {
+        id: 'q005-5',
+        lessonId: 'lesson-005',
+        question: 'What is the ideal espresso extraction time?',
+        options: [
+          '10-15 seconds',
+          '25-30 seconds',
+          '45-60 seconds',
+          '2-3 minutes'
+        ],
+        correctAnswer: 1,
+        explanation: 'The ideal espresso extraction time is 25-30 seconds for a balanced shot. Too fast results in sour, under-extracted coffee; too slow results in bitter, over-extracted coffee.',
+      },
+      {
+        id: 'q005-6',
+        lessonId: 'lesson-005',
+        question: 'What are the three components of a perfect espresso shot?',
+        options: [
+          'Water, coffee, and sugar',
+          'Crema, body, and heart',
+          'Foam, liquid, and sediment',
+          'Top, middle, and bottom'
+        ],
+        correctAnswer: 1,
+        explanation: 'A perfect espresso shot consists of three layers: crema (golden foam on top), body (rich liquid middle), and heart (darker liquid at the bottom).',
+      },
+    ],
+  },
+  {
+    id: 'quiz-006',
+    lessonId: 'lesson-002',
+    title: 'Coffee Growing Regions Quiz',
+    passingScore: 70,
+    questions: [
+      {
+        id: 'q002-1',
+        lessonId: 'lesson-002',
+        question: 'Which country is the largest coffee producer in the world?',
+        options: ['Colombia', 'Vietnam', 'Brazil', 'Ethiopia'],
+        correctAnswer: 2,
+        explanation: 'Brazil is the world\'s largest coffee producer, known for its nutty and chocolatey flavor profiles.',
+      },
+      {
+        id: 'q002-2',
+        lessonId: 'lesson-002',
+        question: 'What is Ethiopia known as in coffee history?',
+        options: [
+          'The coffee capital',
+          'The birthplace of coffee',
+          'The roast master',
+          'The espresso nation'
+        ],
+        correctAnswer: 1,
+        explanation: 'Ethiopia is considered the birthplace of coffee, where coffee arabica plants first grew wild. Ethiopian coffees are known for their fruity and floral notes.',
+      },
+      {
+        id: 'q002-3',
+        lessonId: 'lesson-002',
+        question: 'Which region typically produces coffee with bright acidity and wine-like characteristics?',
+        options: ['Indonesia', 'Brazil', 'Kenya', 'Vietnam'],
+        correctAnswer: 2,
+        explanation: 'Kenyan coffee is renowned for its bright acidity, wine-like characteristics, and berry notes, making it highly sought after by specialty coffee roasters.',
+      },
+      {
+        id: 'q002-4',
+        lessonId: 'lesson-002',
+        question: 'Vietnam is the second-largest coffee producer. What species do they primarily grow?',
+        options: ['Arabica', 'Robusta', 'Liberica', 'Excelsa'],
+        correctAnswer: 1,
+        explanation: 'Vietnam is the world\'s second-largest coffee producer and primarily grows Robusta coffee, which is used mainly for instant coffee and espresso blends.',
+      },
+      {
+        id: 'q002-5',
+        lessonId: 'lesson-002',
+        question: 'What does "terroir" mean in coffee production?',
+        options: [
+          'The roasting technique',
+          'The environment where coffee is grown',
+          'The brewing method',
+          'The type of coffee plant'
+        ],
+        correctAnswer: 1,
+        explanation: 'Terroir refers to the environmental factors (climate, altitude, soil) where coffee is grown, which significantly impact the flavor profile of the coffee.',
+      },
+      {
+        id: 'q002-6',
+        lessonId: 'lesson-002',
+        question: 'Colombian coffee is known for which characteristics?',
+        options: [
+          'Earthy and low acidity',
+          'Well-balanced with medium body and bright acidity',
+          'Very bitter and strong',
+          'Sweet and chocolatey only'
+        ],
+        correctAnswer: 1,
+        explanation: 'Colombian coffee is famous for being well-balanced with a medium body, bright acidity, and often caramel sweetness, making it one of the most recognizable coffee origins.',
+      },
+    ],
+  },
+];
 
 export default router;
